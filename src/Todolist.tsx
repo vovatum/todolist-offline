@@ -13,25 +13,27 @@ type PropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (taskName: string) => void
+    changeStatus: (id: string, isDone: boolean) => void
 }
 
 export function Todolist(props: PropsType) {
 
     let [title, setTitle] = useState('')
-
+    let [error, setError] = useState<string | null>(null)
     const onAddTask = () => {
-        props.addTask(title)
+        if (title.trim() !== '') {
+            props.addTask(title)
+        } else {
+            setError('Title is required')
+        }
         setTitle('')
     }
-
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value)
     }
-
     const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         event.key === 'Enter' && onAddTask()
     }
-
     const onAllClickHandler = () => props.changeFilter('all')
     const onActiveClickHandler = () => props.changeFilter('active')
     const onCompletedClickHandler = () => props.changeFilter('completed')
@@ -42,16 +44,23 @@ export function Todolist(props: PropsType) {
             <div>
                 <input value={title}
                        onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}/>
+                       onKeyPress={onKeyPressHandler}
+                       className={error ? 'error' : ''}
+                />
                 <button onClick={onAddTask}>+</button>
+                {error && <div className={'error-message'}>{error}</div>}
             </div>
             <ul>
                 {
                     props.tasks.map(task => {
                         const onClickHandler = () => props.removeTask(task.id)
+                        const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                            props.changeStatus(task.id, event.target.checked)
+                        }
                         return <li key={task.id}>
                             <input type="checkbox"
-                                   checked={task.isDone}/>
+                                   checked={task.isDone}
+                                   onChange={onChangeHandler}/>
                             <span>{task.title}</span>
                             <button onClick={onClickHandler}>х</button>
                         </li>

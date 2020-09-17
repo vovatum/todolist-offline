@@ -14,14 +14,36 @@ function App() {
         {id: v1(), title: 'Rest API', isDone: true},
         {id: v1(), title: 'GraphQL', isDone: true}
     ])
+    let [filter, setFilter] = useState<FilterValuesType>('all')
+    let tasksForTodolist: any
 
     function removeTask(taskId: string) {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
 
-    let [filter, setFilter] = useState<FilterValuesType>('all')
+    function addTask(taskName: string) {
+        let newTask = {id: v1(), title: taskName, isDone: false}
+        let newTasks = [newTask, ...tasks]
+        setTasks(newTasks)
+    }
 
-    let tasksForTodolist: any
+    function changeStatus(id: string, isDone: boolean) {
+        let task = tasks.find(task => task.id === id)
+        if (task) {
+            task.isDone = isDone
+            setTasks([...tasks])
+        }
+    }
+
+    //map variant
+    // function changeStatus(id: string, isDone: boolean) {
+    //     let newTasks = tasks.map(task => {
+    //         if (task.id === id) {
+    //             return {...task, isDone: isDone}
+    //         } else return task
+    //     })
+    //     setTasks(newTasks)
+    // }
 
     filter === 'active'
         ? tasksForTodolist = tasks.filter(task => !task.isDone)
@@ -29,14 +51,9 @@ function App() {
         ? tasksForTodolist = tasks.filter(task => task.isDone)
         : tasksForTodolist = tasks
 
+
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
-    }
-
-    function addTask(taskName: string) {
-        let newTask = {id: v1(), title: taskName, isDone: false}
-        let newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
     }
 
     return (
@@ -47,6 +64,7 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeStatus={changeStatus}
             />
         </div>
     )
