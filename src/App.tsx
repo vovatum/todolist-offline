@@ -51,7 +51,6 @@ function App() {
         ? tasksForTodolist = tasks.filter(task => task.isDone)
         : tasksForTodolist = tasks
 
-
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
     }
@@ -65,6 +64,7 @@ function App() {
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeStatus={changeStatus}
+                filter={filter}
             />
         </div>
     )
