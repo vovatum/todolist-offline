@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 
 type ValueType = {
     value: string
 }
 
 export function EditedSpan(props: ValueType) {
-    return <span>{props.value}</span>
+
+    let [editMode, setEditMode] = useState(false)
+    const activateEditMode = () => setEditMode(true)
+
+    return editMode
+        ? <input value={props.value}/>
+        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+
 }
