@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 
 type ValueType = {
     value: string
@@ -7,13 +7,19 @@ type ValueType = {
 export function EditedSpan(props: ValueType) {
 
     let [editMode, setEditMode] = useState(false)
-    const activateEditMode = () => setEditMode(true)
+    let [title, setTitle] = useState(props.value)
+    const activateEditMode = () => {
+        setEditMode(true)
+        // setTitle(props.value) ???
+    }
     const activateViewMode = () => setEditMode(false)
+    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.target.value)
+    }
 
     return editMode
-        ? <input
-            value={props.value}
-            autoFocus onBlur={activateViewMode}/>
-        : <span onDoubleClick={activateEditMode}>{props.value}</span>
-
+        ? <input value={title}
+                 autoFocus onBlur={activateViewMode}
+                 onChange={onChangeHandler}/>
+        : <span onDoubleClick={activateEditMode}>{title}</span>
 }
