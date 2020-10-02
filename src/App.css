@@ -22,3 +22,8 @@
 .is-done {
     opacity: 0.5;
 }
+
+.inbuer {
+    display: flex;
+    height: 20px;
+}

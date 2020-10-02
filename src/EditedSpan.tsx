@@ -1,25 +1,35 @@
 import React, {ChangeEvent, useState} from "react";
 
-type ValueType = {
+type EditedSpanPropsType = {
     value: string
+    changeTitle: (title: string) => void
 }
 
-export function EditedSpan(props: ValueType) {
+export function EditedSpan(props: EditedSpanPropsType) {
 
     let [editMode, setEditMode] = useState(false)
     let [title, setTitle] = useState(props.value)
     const activateEditMode = () => {
         setEditMode(true)
-        // setTitle(props.value) ???
+        setTitle(props.value)
     }
-    const activateViewMode = () => setEditMode(false)
+    const activateViewMode = () => {
+        setEditMode(false)
+        // props.changeTitle(title)
+    }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value)
+        setTitle(event.currentTarget.value)
+        props.changeTitle(event.currentTarget.value)
     }
-
+    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        event.key === 'Enter' && activateViewMode()
+    }
     return editMode
-        ? <input value={title}
-                 autoFocus onBlur={activateViewMode}
-                 onChange={onChangeHandler}/>
-        : <span onDoubleClick={activateEditMode}>{title}</span>
+        ? <input
+            value={props.value}
+            autoFocus onBlur={activateViewMode}
+            onKeyPress={onKeyPressHandler}
+            onChange={onChangeHandler}
+        />
+        : <span onClick={activateEditMode}>{props.value}</span>
 }

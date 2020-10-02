@@ -81,6 +81,14 @@ function App() {
             setTasks({...tasks})
         }
     }
+    function changeTitle(id: string, title: string, todolistId: string) {
+        let todolistTasks = tasks[todolistId]
+        let task = todolistTasks.find(task => task.id === id)
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
 
     //map variant
     // function changeStatus(id: string, isDone: boolean) {
@@ -122,6 +130,7 @@ function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeStatus={changeStatus}
+                        changeTitle={changeTitle}
                         filter={todolist.filter}
                     />
                 })
