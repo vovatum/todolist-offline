@@ -60,6 +60,22 @@ function App() {
         setTasks({...tasks})
     }
 
+    function changeFilter(value: FilterValuesType, todolistId: string) {
+        let todolist = todolists.find(todolist => todolist.id === todolistId)
+        if (todolist) {
+            todolist.filter = value
+            setTodolists([...todolists])
+        }
+    }
+
+    function changeTodolistTitle(title: string, todolistId: string) {
+        let todolist = todolists.find(todolist => todolist.id === todolistId)
+        if (todolist) {
+            todolist.title = title
+            setTodolists([...todolists])
+        }
+    }
+
     function addTask(taskName: string, todolistId: string) {
         let newTask = {id: v1(), title: taskName, isDone: false}
         let todolistTasks = tasks[todolistId]
@@ -73,19 +89,20 @@ function App() {
         setTasks({...tasks})
     }
 
+    function changeTaskTitle(id: string, title: string, todolistId: string) {
+        let todolistTasks = tasks[todolistId]
+        let task = todolistTasks.find(task => task.id === id)
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
+
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
         let todolistTasks = tasks[todolistId]
         let task = todolistTasks.find(task => task.id === id)
         if (task) {
             task.isDone = isDone
-            setTasks({...tasks})
-        }
-    }
-    function changeTitle(id: string, title: string, todolistId: string) {
-        let todolistTasks = tasks[todolistId]
-        let task = todolistTasks.find(task => task.id === id)
-        if (task) {
-            task.title = title
             setTasks({...tasks})
         }
     }
@@ -99,14 +116,6 @@ function App() {
     //     })
     //     setTasks(newTasks)
     // }
-
-    function changeFilter(value: FilterValuesType, todolistId: string) {
-        let todolist = todolists.find(todolist => todolist.id === todolistId)
-        if (todolist) {
-            todolist.filter = value
-            setTodolists([...todolists])
-        }
-    }
 
     return (
         <div className="App">
@@ -124,14 +133,15 @@ function App() {
                         key={todolist.id}
                         id={todolist.id}
                         title={todolist.title}
-                        tasks={tasksForTodolist}
+                        filter={todolist.filter}
                         removeTodolist={removeTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
+                        tasks={tasksForTodolist}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeStatus={changeStatus}
-                        changeTitle={changeTitle}
-                        filter={todolist.filter}
+                        changeTaskTitle={changeTaskTitle}
                     />
                 })
             }
