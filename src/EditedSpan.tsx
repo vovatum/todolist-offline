@@ -9,15 +9,20 @@ export function EditedSpan(props: EditedSpanPropsType) {
 
     let [editMode, setEditMode] = useState(false)
     let [title, setTitle] = useState(props.value)
+    let [error, setError] = useState<string | null>(null)
     const activateEditMode = () => {
         setEditMode(true)
         setTitle(props.value)
     }
     const activateViewMode = () => {
-        setEditMode(false)
-        // props.changeTitle(title)
+        if (title.trim() !== '') {
+            setEditMode(false)
+        } else {
+            setError('Title is required')
+        }
     }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setError(null)
         setTitle(event.currentTarget.value)
         props.changeTitle(event.currentTarget.value)
     }
@@ -25,11 +30,17 @@ export function EditedSpan(props: EditedSpanPropsType) {
         event.key === 'Enter' && activateViewMode()
     }
     return editMode
-        ? <input
-            value={props.value}
-            autoFocus onBlur={activateViewMode}
-            onKeyPress={onKeyPressHandler}
-            onChange={onChangeHandler}
-        />
+        ? <div>
+            <input
+                value={props.value}
+                autoFocus onBlur={activateViewMode}
+                onKeyPress={onKeyPressHandler}
+                onChange={onChangeHandler}
+                className={error ? 'error' : ''}
+            />
+            <div>
+                {error && <div className={'error-message'}>{error}</div>}
+            </div>
+        </div>
         : <span onClick={activateEditMode}>{props.value}</span>
 }
