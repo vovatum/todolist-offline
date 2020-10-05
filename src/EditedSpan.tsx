@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
+import {TextField} from "@material-ui/core";
 
 type EditedSpanPropsType = {
     value: string
@@ -30,17 +31,15 @@ export function EditedSpan(props: EditedSpanPropsType) {
         event.key === 'Enter' && activateViewMode()
     }
     return editMode
-        ? <div>
-            <input
-                value={props.value}
-                autoFocus onBlur={activateViewMode}
-                onKeyPress={onKeyPressHandler}
-                onChange={onChangeHandler}
-                className={error ? 'error' : ''}
-            />
-            <div>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>
-        </div>
+        ? <TextField
+            variant={'standard'}
+            value={props.value}
+            autoFocus onBlur={activateViewMode}
+            onKeyPress={onKeyPressHandler}
+            onChange={onChangeHandler}
+            error={!!error}
+            label={'Title'}
+            helperText={error}
+        />
         : <span onClick={activateEditMode}>{props.value}</span>
 }
