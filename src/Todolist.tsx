@@ -49,7 +49,7 @@ export function Todolist(props: PropsType) {
                 </h3>
             </div>
             <AddItemForm addItem={onAddTask}/>
-            <ul>
+            <div>
                 {
                     props.tasks && props.tasks.map(task => {
                         const onClickHandler = () => props.removeTask(task.id, props.id)
@@ -59,8 +59,8 @@ export function Todolist(props: PropsType) {
                         const onChangeTaskTitle = (title: string) => {
                             props.changeTaskTitle(task.id, title, props.id)
                         }
-                        return <li key={task.id}
-                                   className={task.isDone ? 'is-done' : ''}>
+                        return <div key={task.id}
+                                    className={task.isDone ? 'is-done' : ''}>
                             <Checkbox
                                 color={"primary"}
                                 checked={task.isDone}
@@ -71,25 +71,28 @@ export function Todolist(props: PropsType) {
                             <IconButton onClick={onClickHandler}>
                                 <Delete/>
                             </IconButton>
-                        </li>
+                        </div>
                     })
                 }
-            </ul>
+            </div>
             <div>
                 <Button
-                    className={props.filter === 'all' ? 'active-filter' : ''}
+                    variant={props.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
-                    color={"secondary"}
-                    variant={"outlined"}
+                    color={"default"}
                 >All
                 </Button>
                 <Button
-                    className={props.filter === 'active' ? 'active-filter' : ''}
-                    onClick={onRemoveTask}>Active
+                    variant={props.filter === 'active' ? 'outlined' : 'text'}
+                    onClick={onRemoveTask}
+                    color={"primary"}
+                >Active
                 </Button>
                 <Button
-                    className={props.filter === 'completed' ? 'active-filter' : ''}
-                    onClick={onCompletedClickHandler}>Completed
+                    variant={props.filter === 'completed' ? 'outlined' : 'text'}
+                    onClick={onCompletedClickHandler}
+                    color={"secondary"}
+                >Completed
                 </Button>
             </div>
         </div>
