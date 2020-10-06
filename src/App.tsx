@@ -3,8 +3,10 @@ import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Menu, Paper, Toolbar, Typography} from "@material-ui/core";
-import classes from "*.module.css";
+import {
+    AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography
+} from "@material-ui/core";
+import {MenuOpen} from "@material-ui/icons";
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 type TodolistType = {
@@ -126,12 +128,12 @@ function App() {
                     <IconButton edge="start"
                         // className={classes.menuButton}
                                 color="inherit" aria-label="menu">
-                        <Menu open/>
+                        <MenuOpen/>
                     </IconButton>
                     <Typography variant="h6"
                         // className={classes.title}
                     >
-                        News
+                        Todolists
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
