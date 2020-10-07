@@ -64,7 +64,8 @@ export function Todolist(props: PropsType) {
                             <Checkbox
                                 color={"primary"}
                                 checked={task.isDone}
-                                onChange={onChangeHandler}/>
+                                onChange={onChangeHandler}
+                            />
                             <EditedSpan value={task.title}
                                         changeTitle={onChangeTaskTitle}
                             />
