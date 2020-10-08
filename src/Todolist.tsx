@@ -15,9 +15,9 @@ export type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTodolist: (todolistId: string) => void
+    changeTodolistTitle: (title: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
-    changeTodolistTitle: (title: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
     changeTaskTitle: (id: string, title: string, todolistId: string) => void
