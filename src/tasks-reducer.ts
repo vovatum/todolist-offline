@@ -79,7 +79,6 @@ export const tasksReducer = (state: TaskStateType, action: ActionType) => {
             throw new Error("I don't understand this type")
     }
 }
-
 export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
     return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
 }
