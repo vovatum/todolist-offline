@@ -1,4 +1,4 @@
-import {FilterValuesType, TodolistType} from "./App";
+import {FilterValuesType, TaskStateType, TodolistType} from "./App";
 import {v1} from "uuid";
 
 export type RemoveTodolistActionType = {
@@ -26,7 +26,9 @@ type ActionType =
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
 
-export const todolistsReducer = (state: Array<TodolistType>, action: ActionType) => {
+const initialState: Array<TodolistType> = []
+
+export const todolistsReducer = (state: Array<TodolistType> = initialState, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return state.filter(todolist => todolist.id !== action.todolistId)
@@ -52,7 +54,7 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
             }
             return [...state]   //как в копии стейта изменился фильтр
         default:
-            throw new Error("I don't understand this type")
+            return state
     }
 }
 
