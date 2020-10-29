@@ -28,6 +28,7 @@ export type TaskStateType = {
 
 function AppWithRedux() {
 
+
     // let todolist1 = v1()
     // let todolist2 = v1()
     // let [todolists, setTodolists] = useState<Array<TodolistType>>([
@@ -73,15 +74,13 @@ function AppWithRedux() {
     const dispatch = useDispatch()
 
     function removeTodolist(todolistId: string) {
-        const action = RemoveTodolistAC(todolistId)
-        dispatch(action)
+        dispatch(RemoveTodolistAC(todolistId))
     }
 
     function addTodolist(title: string) {
         const action = AddTodolistAC(title)
         dispatch(action)
     }
-
 
     function changeTodolistTitle(title: string, todolistId: string) {
         const action = ChangeTodolistTitleAC(title, todolistId)
