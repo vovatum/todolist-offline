@@ -4,6 +4,7 @@ import {AddItemForm} from "./AddItemForm";
 import {EditedSpan} from "./EditedSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {Task} from "./Task";
 
 export type TaskType = {
     id: string
@@ -26,16 +27,15 @@ export type PropsType = {
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
-
         console.log("Todolist called")
+        console.log(props)
         const onAddTask = useCallback((title: string) => {
             props.addTask(title, props.id)
         }, [props.addTask, props.id])
         const onRemoveTodolist = () => props.removeTodolist(props.id)
-        const onChangeTodolistTitle = (title: string) => {
+        const onChangeTodolistTitle = useCallback((title: string) => {
             props.changeTodolistTitle(title, props.id)
-        }
-
+        },[props.id])
         const onActiveClickHandler = useCallback(() => {
             props.changeFilter('active', props.id)
         }, [props.id])
@@ -75,20 +75,14 @@ export const Todolist = React.memo(function (props: PropsType) {
                             const onChangeTaskTitle = (title: string) => {
                                 props.changeTaskTitle(task.id, title, props.id)
                             }
-                            return <div key={task.id}
-                                        className={task.isDone ? 'is-done' : ''}>
-                                <Checkbox
-                                    color={"primary"}
-                                    checked={task.isDone}
-                                    onChange={onChangeHandler}
-                                />
-                                <EditedSpan value={task.title}
-                                            changeTitle={onChangeTaskTitle}
-                                />
-                                <IconButton onClick={onClickHandler}>
-                                    <Delete/>
-                                </IconButton>
-                            </div>
+                            return <Task
+                                id={task.id}
+                                title={task.title}
+                                isDone={task.isDone}
+                                removeTask={onClickHandler}
+                                changeStatus={onChangeHandler}
+                                changeTaskTitle={onChangeTaskTitle}
+                            />
                         })
                     }
                 </div>
