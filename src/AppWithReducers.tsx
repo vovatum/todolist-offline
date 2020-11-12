@@ -2,7 +2,7 @@ import React, {useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {
     AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography
 } from "@material-ui/core";
@@ -69,52 +69,35 @@ function AppWithReducers() {
         const action = RemoveTodolistAC(todolistId)
         dispatchToTasks(action)
         dispatchToTodolists(action)    }
-
     function addTodolist(title: string) {
         const action = AddTodolistAC(title)
         dispatchToTasks(action)
         dispatchToTodolists(action)
     }
-
     function changeTodolistTitle(title: string, todolistId: string) {
         const action = ChangeTodolistTitleAC(title, todolistId)
         dispatchToTodolists(action)
     }
-
     function changeFilter(value: FilterValuesType, todolistId: string) {
         const action = ChangeTodolistFilterAC(value, todolistId)
         dispatchToTodolists(action)
     }
-
     function removeTask(taskId: string, todolistId: string) {
         const action = removeTaskAC(taskId, todolistId)
         dispatchToTasks(action)
     }
-
     function addTask(taskName: string, todolistId: string) {
         const action = addTaskAC(taskName, todolistId)
         dispatchToTasks(action)
     }
-
     function changeTaskTitle(id: string, title: string, todolistId: string) {
         const action = changeTaskTitleAC(id, title, todolistId)
         dispatchToTasks(action)
     }
-
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
         const action = changeTaskStatusAC(id, isDone, todolistId)
         dispatchToTasks(action)
     }
-
-    //map variant
-    // function changeStatus(id: string, isDone: boolean) {
-    //     let newTasks = tasks.map(task => {
-    //         if (task.id === id) {
-    //             return {...task, isDone: isDone}
-    //         } else return task
-    //     })
-    //     setTasks(newTasks)
-    // }
 
     return (
         <div className="App">

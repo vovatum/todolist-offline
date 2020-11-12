@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {
     AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography
 } from "@material-ui/core";
@@ -27,7 +27,6 @@ export type TaskStateType = {
 }
 
 function AppWithRedux() {
-
 
     // let todolist1 = v1()
     // let todolist2 = v1()
@@ -77,50 +76,40 @@ function AppWithRedux() {
         dispatch(RemoveTodolistAC(todolistId))
     }
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         const action = AddTodolistAC(title)
         dispatch(action)
-    }
+    }, [dispatch])
 
-    function changeTodolistTitle(title: string, todolistId: string) {
+    const changeTodolistTitle = useCallback((title: string, todolistId: string) => {
         const action = ChangeTodolistTitleAC(title, todolistId)
         dispatch(action)
-    }
+    }, [])
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
+    const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         const action = ChangeTodolistFilterAC(value, todolistId)
         dispatch(action)
-    }
+    }, [])
 
-    function removeTask(taskId: string, todolistId: string) {
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
         const action = removeTaskAC(taskId, todolistId)
         dispatch(action)
-    }
+    }, [])
 
-    function addTask(taskName: string, todolistId: string) {
+    const addTask = useCallback((taskName: string, todolistId: string) => {
         const action = addTaskAC(taskName, todolistId)
         dispatch(action)
-    }
+    }, [])
 
-    function changeTaskTitle(id: string, title: string, todolistId: string) {
+    const changeTaskTitle = useCallback((id: string, title: string, todolistId: string) => {
         const action = changeTaskTitleAC(id, title, todolistId)
         dispatch(action)
-    }
+    }, [])
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => {
         const action = changeTaskStatusAC(id, isDone, todolistId)
         dispatch(action)
-    }
-
-    //map variant
-    // function changeStatus(id: string, isDone: boolean) {
-    //     let newTasks = tasks.map(task => {
-    //         if (task.id === id) {
-    //             return {...task, isDone: isDone}
-    //         } else return task
-    //     })
-    //     setTasks(newTasks)
-    // }
+    }, [])
 
     return (
         <div className="App">
@@ -146,12 +135,7 @@ function AppWithRedux() {
                 <Grid container spacing={3}>
                     {
                         todolists.map(todolist => {
-                            let allTodolistTasks = tasks[todolist.id], tasksForTodolist
-                            todolist.filter === 'active'
-                                ? tasksForTodolist = allTodolistTasks.filter(task => !task.isDone)
-                                : todolist.filter === 'completed'
-                                ? tasksForTodolist = allTodolistTasks.filter(task => task.isDone)
-                                : tasksForTodolist = allTodolistTasks
+                            let allTodolistTasks = tasks[todolist.id]
 
                             return <Grid item>
                                 <Paper style={{padding: '10px'}}>
@@ -162,7 +146,7 @@ function AppWithRedux() {
                                         filter={todolist.filter}
                                         removeTodolist={removeTodolist}
                                         changeTodolistTitle={changeTodolistTitle}
-                                        tasks={tasksForTodolist}
+                                        tasks={allTodolistTasks}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
