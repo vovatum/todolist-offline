@@ -26,18 +26,27 @@ export type PropsType = {
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
+
         console.log("Todolist called")
         const onAddTask = useCallback((title: string) => {
             props.addTask(title, props.id)
         }, [props.addTask, props.id])
-        const onRemoveTask = () => props.changeFilter('active', props.id)
         const onRemoveTodolist = () => props.removeTodolist(props.id)
         const onChangeTodolistTitle = (title: string) => {
             props.changeTodolistTitle(title, props.id)
         }
-        const onAllClickHandler = () => props.changeFilter('all', props.id)
-        const onCompletedClickHandler = () => props.changeFilter('completed', props.id)
-        let tasksForTodolist = props.tasks
+
+        const onActiveClickHandler = useCallback(() => {
+            props.changeFilter('active', props.id)
+        }, [props.id])
+        const onAllClickHandler = useCallback(() => {
+            props.changeFilter('all', props.id)
+        }, [props.id])
+        const onCompletedClickHandler = useCallback(() => {
+            props.changeFilter('completed', props.id)
+        }, [props.id])
+
+        let tasksForTodolist: Array<TaskType>
         props.filter === 'active'
             ? tasksForTodolist = props.tasks.filter(task => !task.isDone)
             : props.filter === 'completed'
@@ -92,7 +101,7 @@ export const Todolist = React.memo(function (props: PropsType) {
                     </Button>
                     <Button
                         variant={props.filter === 'active' ? 'outlined' : 'text'}
-                        onClick={onRemoveTask}
+                        onClick={onActiveClickHandler}
                         color={"primary"}
                     >Active
                     </Button>
