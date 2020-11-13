@@ -102,7 +102,7 @@ function App() {
         }
     }
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    function changeTaskStatus(id: string, isDone: boolean, todolistId: string) {
         let todolistTasks = tasks[todolistId]
         let task = todolistTasks.find(task => task.id === id)
         if (task) {
@@ -112,7 +112,7 @@ function App() {
     }
 
     //map variant
-    // function changeStatus(id: string, isDone: boolean) {
+    // function changeTaskStatus(id: string, isDone: boolean) {
     //     let newTasks = tasks.map(task => {
     //         if (task.id === id) {
     //             return {...task, isDone: isDone}
@@ -165,7 +165,7 @@ function App() {
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
-                                        changeStatus={changeStatus}
+                                        changeTaskStatus={changeTaskStatus}
                                         changeTaskTitle={changeTaskTitle}
                                     />
                                 </Paper>

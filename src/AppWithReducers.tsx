@@ -94,7 +94,7 @@ function AppWithReducers() {
         const action = changeTaskTitleAC(id, title, todolistId)
         dispatchToTasks(action)
     }
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    function changeTaskStatus(id: string, isDone: boolean, todolistId: string) {
         const action = changeTaskStatusAC(id, isDone, todolistId)
         dispatchToTasks(action)
     }
@@ -143,7 +143,7 @@ function AppWithReducers() {
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
-                                        changeStatus={changeStatus}
+                                        changeTaskStatus={changeTaskStatus}
                                         changeTaskTitle={changeTaskTitle}
                                     />
                                 </Paper>
