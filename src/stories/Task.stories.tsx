@@ -1,6 +1,6 @@
 import React from "react";
 import {action} from "@storybook/addon-actions";
-import {Task} from "./Task";
+import {Task} from "../components/Task";
 
 
 export default {
